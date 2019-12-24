@@ -56,7 +56,21 @@ class App extends React.Component {
       const myJson = await response.json();
       this.setState(() => ({repos: []}));
       for(let i = 0; i < myJson.length && i < 25; i++){
-        this.setState((prevState) => ({repos: [...this.state.repos, myJson[i]]}));
+        let repo = {
+          id: myJson[i].id,
+          user: myJson[i].owner.login,
+          name: myJson[i].name,
+          full_name: myJson[i].full_name,
+          html_url: myJson[i].html_url,
+          description: myJson[i].description,
+          owner: {
+            id :myJson[i].owner.id,
+            login: myJson[i].owner.login,
+            avatar_url: myJson[i].avatar_url,
+            html_url: myJson[i].owner.html_url
+          }
+        }
+        this.setState((prevState) => ({repos: [...this.state.repos, repo]}));
       }
     } catch (err) {
       console.log(err);
